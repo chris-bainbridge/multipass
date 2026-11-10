@@ -167,9 +167,9 @@ mp::VMImage mp::DefaultVMImageVault::fetch_image(const Query& query,
         QUrl image_url(QString::fromStdString(query.release));
         VMImage source_image, vm_image;
 
-        if (image_url.host().size() != 0)
+        if (!image_url.isLocalFile())
             throw std::runtime_error(
-                fmt::format("Invalid file URL `{}`; did you forget a slash?", query.release));
+                fmt::format("Invalid local file URL `{}`; did you forget a slash?", query.release));
 
         source_image.image_path = image_url.toLocalFile().toStdString();
 
